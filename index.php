@@ -2,27 +2,17 @@
 <html>
 <head>
     <title>Analyze Sample</title>
-    <script src="/jquery.min.js"></script>
+    <!-- <script src="/jquery.min.js"></script> -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 </head>
 <body>
  
 <script type="text/javascript">
     function processImage(){
-		        // **********************************************
-        // *** Update or verify the following values. ***
-        // **********************************************
- 
-        // Replace <Subscription Key> with your valid subscription key.
+		       
         var subscriptionKey = "b3e217d502b344bcb2c5c304e0f5bd23";
 		console.log("declare sub key");
-        // You must use the same Azure region in your REST API method as you used to
-        // get your subscription keys. For example, if you got your subscription keys
-        // from the West US region, replace "westcentralus" in the URL
-        // below with "westus".
-        //
-        // Free trial subscription keys are generated in the "westus" region.
-        // If you use a free trial subscription key, you shouldn't need to change
-        // this region.
+        
         var uriBase =
             "https://southeastasia.api.cognitive.microsoft.com/vision/v2.0/analyze";
 		//console.log("declare uri base");
@@ -37,9 +27,9 @@
         // Display the image.
         var sourceImageUrl = document.getElementById("inputImage").value;
         document.querySelector("#sourceImage").src = sourceImageUrl;
-		//console.log(sourceImageUrl);
+		console.log(sourceImageUrl);
 		//console.log("display images");
-		
+		document.getElementById("hiddenVal").value = sourceImageUrl.toString();
 		
 		// Make the REST API call.
         $.ajax({
@@ -74,21 +64,20 @@
             alert(errorString);
         });
 		//console.log("fail");
-		
-		
-    };
+	
+};		
 </script>
  
 <h1>Analyze image:</h1>
 Enter the URL to an image, then click the <strong>Analyze image</strong> button.
 <br><br>
 Image to analyze:
-<form action="index.php" method="POST" onsubmit="return false;">
-<input type="text" name="inputImage" id="inputImage"
+<form method="POST" action="" onsubmit="return false;">
+<input type="text" name="inputImage2" id="inputImage"
     value="http://upload.wikimedia.org/wikipedia/commons/3/3c/Shaki_waterfall.jpg" />
 	<input type="submit" onclick="processImage()" value="Analyze image"/>
-
-			
+<input type="text"  id="hiddenVal" />
+		<!--style="display:none"-->	
 <br><br>
 <div id="wrapper" style="width:1020px; display:table;">
     <div id="jsonOutput" style="width:600px; display:table-cell;">
@@ -119,15 +108,23 @@ Image to analyze:
 			$blobClient = BlobRestProxy::createBlobService($connectionString);
 			
 			
-			//$fileToUpload = false;
-			////echo($fileToUpload."<br>");
-			$fileToUpload = "http://upload.wikimedia.org/wikipedia/commons/3/3c/Shaki_waterfall.jpg";
-			//echo($fileToUpload);
-			if(isset($_POST['inputImage'])){
-				$fileToUpload = $_POST['inputImage'];
-				//echo("<p>masuk</p>");
+			
+			
+			//$fileToUpload = $_POST['hiddenVal'];
+			//$fileToUpload = $_POST['hiddenVal'];
+			//echo("<p>masuk</p>");
+			$fileToUpload = "<script>document.getElementById('inputImage').value</script>";
+			echo("isinya : ".$fileToUpload."<br>");
+			if(isset($_POST['inputImage2'])){
+				$fileToUpload = $_POST['inputImage2'];
+				echo("<p>masuk</p>");
 				//echo("dicoba ".$fileToUpload."<br>");
 			}
+			else{
+				$fileToUpload ="";
+				echo("kosong");
+			}
+			echo("kosong lagi");
 				
 						
 			//Get the file
@@ -251,5 +248,6 @@ Image to analyze:
 			
 		
 			?>
+    
 </body>
 </html>
