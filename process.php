@@ -102,7 +102,7 @@
 					//echo "<br />";
 
 					// Get blob.
-					echo "This is the content of the blob uploaded: ";
+					echo "This is the content of the blob uploaded: <br>";
 					echo '<img src="' . $fl . '">';
 					$blob = $blobClient->getBlob($containerName, $fl);
 					fpassthru($blob->getContentStream());
